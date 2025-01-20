@@ -1,0 +1,40 @@
+@model IEnumerable<SportspersonEventViewModel>?
+
+<h2>Sportsperson Event Participation @ViewBag.Name</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Sport</th>
+        <th>Event</th>
+        <th>Olympics</th>
+        <th>Season</th>
+        <th>Age at Event</th>
+        <th>Medal</th>
+        <th>Event Id</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.SportName</td>
+            <td>@item.EventName</td>
+            <td>@item.Olympiad</td>
+            <td>@item.Season</td>
+            <td>@item.AgeAtEvent</td>
+            <td>@item.Medal</td>
+            <td>@item.EventId</td>
+            <td>
+                <form asp-action="DeleteParticipation" method="post">
+                    <input type="hidden" name="competitorId" value="@item.EventId" />
+                    <input type="hidden" name="eventId" value="@item.Event" />
+                    <input type="hidden" name="medalId" value="@item.MedalId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

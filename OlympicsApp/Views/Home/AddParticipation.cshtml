@@ -1,0 +1,35 @@
+@model AddParticipationViewModel
+
+<h2>Add Participation</h2>
+
+<form asp-action="AddParticipation" asp-route-sportspersonId="@ViewBag.SportspersonId" method="post">
+    <div class="form-group">
+        <label asp-for="SelectedEventId"></label>
+        <select asp-for="SelectedEventId" asp-items="Model.Events" class="form-control"></select>
+        <span asp-validation-for="SelectedEventId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedOlympiadId"></label>
+        <select asp-for="SelectedOlympiadId" asp-items="Model.Olympiads" class="form-control"></select>
+        <span asp-validation-for="SelectedOlympiadId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="SelectedMedalId"></label>
+        <select asp-for="SelectedMedalId" asp-items="Model.Medals" class="form-control"></select>
+        <span asp-validation-for="SelectedMedalId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="AgeAtEvent"></label>
+        <input asp-for="AgeAtEvent" class="form-control" type="number" />
+        <span asp-validation-for="AgeAtEvent" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Participation</button>
+</form>
+
+<div>
+    <a asp-action="Sportspeople">Back to Sportspeople</a>
+</div>

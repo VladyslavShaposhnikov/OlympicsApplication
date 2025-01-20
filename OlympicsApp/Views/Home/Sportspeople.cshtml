@@ -1,0 +1,74 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<OlympicsApp.Models.Olympics.SportspersonViewModel>
+
+<h2>Lista sportowców</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Full Name</th>
+        <th>Weight</th>
+        <th>Height</th>
+        <th>Gender</th>
+        <th>Gold Medals</th>
+        <th>Silver Medals</th>
+        <th>Bronze Medals</th>
+        <th>Number of Participations</th>
+        <th>Add Partisipation</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var person in Model)
+    {
+        <tr>
+            <td>@person.FullName</td>
+            <td>@person.Weight</td>
+            <td>@person.Height</td>
+            <td>@person.Gender</td>
+            <td>@person.GoldMedals</td>
+            <td>@person.SilverMedals</td>
+            <td>@person.BronzeMedals</td>
+            <td>
+                <a asp-controller="Home" asp-action="SportspersonEvents" asp-route-sportspersonId="@person.SportspersonId">
+                    @person.NumberOfParticipations
+                </a>
+            </td>
+            <td>
+                <a asp-controller="Home" asp-action="AddParticipation" asp-route-sportspersonId="@person.SportspersonId">
+                    Add
+                </a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="pagination">
+    @if (ViewBag.CurrentPage > 1)
+    {
+        <a asp-controller="Home" asp-action="Sportspeople" asp-route-page="@(ViewBag.CurrentPage - 1)" class="btn btn-primary">Previous</a>
+    }
+
+    @for (int i = 0; i < ViewBag.PagesToShow.Count; i++)
+    {
+        int pageNumber = ViewBag.PagesToShow[i];
+        int nextPageNumber = i < ViewBag.PagesToShow.Count - 1 ? ViewBag.PagesToShow[i + 1] : 0;
+
+        // Render the current page
+        <a asp-controller="Home" asp-action="Sportspeople" asp-route-page="@pageNumber"
+           class="btn @(pageNumber == ViewBag.CurrentPage ? "btn-secondary" : "btn-primary")">
+            @pageNumber
+        </a>
+
+        // Add ellipsis if the gap between this page and the next is greater than 1
+        if (nextPageNumber - pageNumber > 1)
+        {
+            <span class="btn disabled">...</span>
+        }
+    }
+
+    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+    {
+        <a asp-controller="Home" asp-action="Sportspeople" asp-route-page="@(ViewBag.CurrentPage + 1)" class="btn btn-primary">Next</a>
+    }
+</div>
